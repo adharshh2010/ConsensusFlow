@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   },
   description: "Trust what is True with Proof. - ConsensusFlow",
   authors: [{ name: "Adharsh", url: "" }],
+  icons: {
+    icon: "/favicon.ico",
+    href: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -32,6 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body
         className={`${poppins.variable} ${ubuntu.variable} ${poppins.style}${ubuntu.className} ${ubuntu.style} font-ubuntu antialiased `}
       >
