@@ -29,5 +29,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/minimatch": "^6.0.0"
+  }
 }
