@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@workspace/ui/lib/utils";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const route = useRouter();
+
+  const path = route.prefetch;
 
   const navLinks = [
     { name: "Features", href: "/features" },
@@ -26,7 +32,10 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-700 hover:text-gray-400 transition-colors text-sm"
+              className={cn(
+                `text-gray-700 hover:text-gray-400 transition-colors text-sm`,
+                path.toString() === link.href && "text-primary font-semibold"
+              )}
             >
               {link.name}
             </Link>
@@ -41,7 +50,7 @@ export default function Navbar() {
             Contact
           </Link>
           <Link
-            href="/auth"
+            href="/auth/login"
             className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 text-sm transition-colors"
           >
             Get Started
@@ -49,7 +58,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden"
+          className="md:hidden text-primary"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -58,13 +67,15 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur">
+        <div className="md:hidden border-t border-border bg-foreground/95 backdrop-blur">
           <div className="px-4 py-4 space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block text-muted-foreground hover:text-foreground transition-colors"
+                className={cn(
+                  "block text-gray-950 hover:text-foreground transition-colors"
+                )}
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
@@ -73,13 +84,13 @@ export default function Navbar() {
             <div className="pt-4 space-y-2 border-t border-border">
               <Link
                 href="/contact"
-                className="block px-4 py-2 rounded-lg border border-border text-center hover:border-foreground transition-colors"
+                className="block px-4 py-2 rounded-lg border border-border text-center  hover:border-foreground text-neutral-950 hover:text-gray-500 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Contact
               </Link>
               <Link
-                href="/auth"
+                href="/auth/login"
                 className="block px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 text-center transition-colors"
                 onClick={() => setIsOpen(false)}
               >
