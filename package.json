@@ -6,8 +6,8 @@
     "@workspace/mobile-package": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "@workspace/consensusflow": "workspace:*",
-    "prettier": "^3.7.1",
-    "turbo": "^2.6.1",
+    "prettier": "^3.7.4",
+    "turbo": "^2.6.3",
     "typescript": "5.7.3"
   },
   "engines": {
