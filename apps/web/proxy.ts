@@ -1,6 +1,9 @@
-import { auth } from "@/auth";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export default auth((req) => {});
+export function proxy(req: NextRequest, res: NextResponse) {
+  return null;
+}
 
 export const config = {
   matcher: [

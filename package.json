@@ -7,7 +7,7 @@
     "@workspace/typescript-config": "workspace:*",
     "@workspace/consensusflow": "workspace:*",
     "prettier": "^3.7.4",
-    "turbo": "^2.6.3",
+    "turbo": "^2.7.2",
     "typescript": "5.7.3"
   },
   "engines": {

@@ -1,5 +1,3 @@
-"use cache"
-
 import HomePage from "@/components/Home/HomePage";
 
 export default function Page() {
