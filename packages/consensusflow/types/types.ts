@@ -1,5 +1,3 @@
-import { ThemeColors } from "./types";
-
 // Types for the app
 
 export type ThemeColors = string | Colors;

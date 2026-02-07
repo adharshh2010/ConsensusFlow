@@ -1,0 +1,20 @@
+CREATE TABLE "users" (
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
+	"uuid" varchar(255) NOT NULL,
+	"username" varchar(255),
+	"name" varchar(255),
+	"age" integer,
+	"email" varchar(255) NOT NULL,
+	"email_verified_at" timestamp (3) with time zone,
+	"is_email_verified" boolean DEFAULT false NOT NULL,
+	"phone" varchar(16),
+	"phone_verified_at" timestamp (3) with time zone,
+	"is_phone_verified" boolean DEFAULT false NOT NULL,
+	"password" varchar(255),
+	"created_at" timestamp (3) with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp (3) with time zone NOT NULL,
+	CONSTRAINT "users_uuid_unique" UNIQUE("uuid"),
+	CONSTRAINT "users_username_unique" UNIQUE("username"),
+	CONSTRAINT "users_email_unique" UNIQUE("email"),
+	CONSTRAINT "users_phone_unique" UNIQUE("phone")
+);

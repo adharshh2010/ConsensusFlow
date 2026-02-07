@@ -2,12 +2,15 @@
   "name": "consensusflow",
   "version": "1.0.0",
   "devDependencies": {
+    "@workspace/consensusflow": "workspace:*",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/mobile-package": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "@workspace/consensusflow": "workspace:*",
+    "baseline-browser-mapping": "^2.9.19",
+    "drizzle-kit": "^0.31.8",
     "prettier": "^3.7.4",
-    "turbo": "^2.7.2",
+    "tsx": "^4.21.0",
+    "turbo": "^2.7.3",
     "typescript": "5.7.3"
   },
   "engines": {
@@ -20,7 +23,15 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:pull": "drizzle-kit pull",
+    "db:check": "drizzle-kit check",
+    "db:update": "drizzle-kit up",
+    "db:drop": "drizzle-kit drop"
   },
   "trustedDependencies": [
     "@tailwindcss/oxide",
@@ -31,6 +42,11 @@
     "packages/*"
   ],
   "dependencies": {
-    "@types/minimatch": "^6.0.0"
+    "@neondatabase/serverless": "^1.0.2",
+    "@types/minimatch": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "uuid": "^13.0.0"
   }
 }

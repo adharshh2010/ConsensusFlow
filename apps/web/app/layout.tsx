@@ -1,8 +1,9 @@
+import { Metadata } from "next/types";
 import { Poppins, Ubuntu } from "next/font/google";
 
 import "@workspace/ui/globals.css";
 import { Providers } from "@/components/providers";
-import { Metadata } from "next/types";
+import { Toaster } from "@workspace/ui/components/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${ubuntu.variable} ${poppins.style}${ubuntu.className} ${ubuntu.style} font-ubuntu antialiased `}
       >
+        <Toaster richColors closeButton />
         <Providers>{children}</Providers>
       </body>
     </html>
