@@ -22,9 +22,16 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
       };
     }
 
-    const Hashpassword = ExistingUser.password!;
+    const hashedPassword = ExistingUser.password;
 
-    const isPasswordValid = await bcrypt.compare(password, Hashpassword);
+    if (!hashedPassword) {
+      return {
+        error: "Invalid email or password.",
+        status: 401,
+      };
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
 
     if (!isPasswordValid) {
       return {

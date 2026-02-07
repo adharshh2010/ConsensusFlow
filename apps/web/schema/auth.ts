@@ -6,7 +6,7 @@ export const LoginSchema = z.object({
     .string()
     .min(6, { error: "Password must be at least 6 characters" })
     .max(64, { error: "Password must be at most 64 characters" }),
-  remember: z.boolean(),
+  remember: z.boolean().optional().default(false),
 });
 
 export const RegisterSchema = z.object({

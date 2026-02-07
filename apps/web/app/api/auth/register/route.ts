@@ -8,16 +8,16 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    const apiDataValidation = RegisterSchema.parse(data);
+    const apiDataValidation = RegisterSchema.safeParse(data);
 
-    if (!apiDataValidation) {
+    if (!apiDataValidation.success) {
       return res.json(
         { error: `Server Couldn't Verify Requested Data Try Again!` },
         { status: 417 },
       );
     }
 
-    const apiData = apiDataValidation;
+    const apiData = apiDataValidation.data;
 
     try {
       try {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
           if (data?.error) {
             return res.json(
               { error: `${data.error}` },
-              { status: data.status },
+              { status: data.status ?? 400 },
             );
           }
           if (data.success) {

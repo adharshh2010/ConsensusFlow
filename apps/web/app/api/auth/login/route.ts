@@ -8,16 +8,16 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    const apiDataValidation = LoginSchema.parse(data);
+    const apiDataValidation = LoginSchema.safeParse(data);
 
-    if (!apiDataValidation) {
+    if (!apiDataValidation.success) {
       return res.json(
         { error: `Server Couldn't Verify Requested Data Try Again!` },
-        { status: 417 }
+        { status: 417 },
       );
     }
 
-    const apiData = apiDataValidation;
+    const apiData = apiDataValidation.data;
 
     try {
       try {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
           if (data?.error) {
             return res.json(
               { error: `${data.error}` },
-              { status: data.status }
+              { status: data.status ?? 400 },
             );
           }
           if (data.success) {
@@ -34,20 +34,20 @@ export async function POST(req: Request) {
                 success: `${data.success}`,
                 description: `${data.description}`,
               },
-              { status: data.status }
+              { status: data.status },
             );
           }
           return res.json(
             {
               error: `Server didn't return any message! Check the status code for more ${data.status}`,
             },
-            { status: data.status }
+            { status: data.status },
           );
         });
       } catch {
         return res.json(
           { error: "The server is currently unable to handle the request." },
-          { status: 503 }
+          { status: 503 },
         );
       }
     } catch {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
         {
           error: `Something Went Wrong While Handling The Request`,
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
   } catch {
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       {
         error: "Internal Server Error!",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

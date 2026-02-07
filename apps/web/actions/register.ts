@@ -9,9 +9,17 @@ import { db, getUserByEmail, usersTable } from "@workspace/consensusflow";
 
 export const register = async (data: z.infer<typeof RegisterSchema>) => {
   // Todo: Add rate limiter by your own!
-  // console.log(data);
 
-  const { email, password } = data;
+  const validatedFields = RegisterSchema.safeParse(data);
+
+  if (!validatedFields.success) {
+    return {
+      error: "Invalid input data!",
+      status: 400,
+    };
+  }
+
+  const { email, password } = validatedFields.data;
 
   const ExistingUser = await getUserByEmail(email);
 

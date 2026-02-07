@@ -19,8 +19,7 @@ export const usersTable = pgTable("users", {
   username: varchar({ length: 255 }).unique(),
 
   name: varchar({ length: 255 }),
-  age: integer().$default(() => 0),
-
+  age: integer().default(0),
   email: varchar({ length: 255 }).notNull().unique(),
   emailVerifiedAt: timestamp("email_verified_at", {
     precision: 3,
@@ -48,5 +47,6 @@ export const usersTable = pgTable("users", {
     .defaultNow(),
   updated_at: timestamp("updated_at", { precision: 3, withTimezone: true })
     .notNull()
+    .defaultNow()
     .$onUpdate(() => new Date()),
 });
