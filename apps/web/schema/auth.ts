@@ -6,7 +6,7 @@ export const LoginSchema = z.object({
     .string()
     .min(6, { error: "Password must be at least 6 characters" })
     .max(64, { error: "Password must be at most 64 characters" }),
-  remember: z.boolean().optional().default(false),
+  remember: z.boolean(),
 });
 
 export const RegisterSchema = z.object({
@@ -15,4 +15,8 @@ export const RegisterSchema = z.object({
     .string()
     .min(6, { error: "Password must be at least 6 characters" })
     .max(64, { error: "Password must be at most 64 characters" }),
+});
+
+export const OTPSchema = z.object({
+  otp: z.string().regex(/^\d{6}$/, { error: "OTP must be 6 digits" }),
 });

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { LoginSchema } from "@/schema/auth";
-import { login } from "@/actions/login";
+import { login } from "@/actions/auth/login";
 
 export async function POST(req: Request) {
   const res = NextResponse;
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
           if (data.success) {
             return res.json(
               {
+                OTP: data.OTP,
                 success: `${data.success}`,
                 description: `${data.description}`,
               },

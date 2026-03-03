@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import type React from "react";
-import Link from "next/link";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
@@ -13,7 +12,6 @@ import { useTransition } from "react";
 
 import { Button } from "@workspace/ui/components/button";
 import { Card } from "@workspace/ui/components/card";
-import { Checkbox } from "@workspace/ui/components/checkbox";
 import {
   Field,
   FieldError,

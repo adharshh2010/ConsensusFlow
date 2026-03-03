@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { RegisterSchema } from "@/schema/auth";
-import { register } from "@/actions/register";
+import { register } from "@/actions/auth/register";
 
 export async function POST(req: Request) {
   const res = NextResponse;
