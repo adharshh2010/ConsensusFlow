@@ -1,14 +1,11 @@
 import { db } from "@workspace/consensusflow/db";
 import { eq } from "drizzle-orm";
 
-// import { resend } from "@workspace/consensusflow/const/const";
+import { resend } from "@workspace/consensusflow/const/const";
 import { generate2FAOTP } from "@workspace/consensusflow/utils/generator/otp/2FAotpgen";
 import { otptable } from "@workspace/consensusflow/db/schema";
-import { Resend } from "resend";
 
 export const send2FAOTP = async (email: string) => {
-  const resend = await new Resend(process.env.RESEND_API_KEY!);
-
   try {
     const existingOTP = await db.query.otptable.findFirst({
       where: eq(otptable.email, email),
@@ -17,7 +14,11 @@ export const send2FAOTP = async (email: string) => {
     if (existingOTP && existingOTP.expiresAt > new Date()) {
       const otp = existingOTP.otp;
 
-      const expiryMinutes = existingOTP.expiresAt.getTime() - Date.now();
+      const expiryMinutes = Math.ceil(
+        (Date.parse(existingOTP.expiresAt.toISOString()) -
+          Date.parse(new Date().toISOString())) /
+          (1000 * 60),
+      );
 
       const res = await resend.emails.send({
         to: email,
@@ -86,7 +87,11 @@ export const send2FAOTP = async (email: string) => {
         where: eq(otptable.email, email),
       });
 
-      const expiryMinutes = OTPuser!.expiresAt.getTime() - Date.now();
+      const expiryMinutes = Math.ceil(
+        (Date.parse(OTPuser!.expiresAt.toISOString()) -
+          Date.parse(new Date().toISOString())) /
+          (1000 * 60),
+      );
 
       const res = await resend.emails.send({
         to: email,

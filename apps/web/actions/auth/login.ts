@@ -65,7 +65,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
         success:
           "Verification code sent to your email. Please verify to continue.",
         OTP: true,
-        status: 403,
+        status: 200,
       };
     } else {
       return {
