@@ -7,7 +7,7 @@
     "@workspace/mobile-package": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "baseline-browser-mapping": "^2.9.19",
-    "drizzle-kit": "^0.31.8",
+    "drizzle-kit": "^0.31.9",
     "prettier": "^3.7.4",
     "tsx": "^4.21.0",
     "turbo": "^2.7.3",
