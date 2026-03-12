@@ -55,6 +55,13 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
         maxAge: remember ? 60 * 60 * 24 * 30 : undefined, // 30 days if remember is true, otherwise session cookie
       });
 
+      (await cookies()).set("email", String(email), {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: remember ? 60 * 60 * 24 * 30 : undefined, // 30 days if remember is true, otherwise session cookie
+      });
+
       await send2FAOTP(email).then((state) => {
         if (state.error) {
           return { error: state.error };
