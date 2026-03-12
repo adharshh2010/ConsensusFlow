@@ -9,7 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 
 import { Button } from "@workspace/ui/components/button";
 import { Card } from "@workspace/ui/components/card";
@@ -30,11 +30,13 @@ import { Input } from "@workspace/ui/components/input";
 import { LoginSchema, OTPSchema } from "@/schema/auth";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { verify2FAotp } from "@/actions/auth/2FAotpValidation";
+import { resendOTP } from "@/actions/auth/resend-otp";
 
 export default function LoginPage() {
   const [isPending, setPending] = useTransition();
 
   const [OTP, showOTP] = useState(false);
+  const [cooldownTime, setCooldownTime] = useState(0);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -51,6 +53,39 @@ export default function LoginPage() {
       otp: undefined,
     },
   });
+
+  useEffect(() => {
+    if (cooldownTime > 0) {
+      const timer = setTimeout(() => setCooldownTime(cooldownTime - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [cooldownTime]);
+
+  const handleResend = () => {
+    setPending(async () => {
+      try {
+        await resendOTP().then((data) => {
+          if (data.error) {
+            toast.error(`${data.error || "Oops Something went really wrong!"}`);
+          }
+          if (data.success) {
+            toast.success(`${data.success}`, {
+              description: `${data.description}`,
+            });
+          }
+        });
+      } catch {
+        toast.error("Failed to resend OTP. Please try again.", {
+          description: "Try Again, After Few Moments!",
+        });
+      }
+    });
+  };
+
+  const onResendClick = () => {
+    handleResend();
+    setCooldownTime(60);
+  };
 
   const onOTPsubmit = async (data: z.infer<typeof OTPSchema>) => {
     setPending(async () => {
@@ -88,7 +123,8 @@ export default function LoginPage() {
           form.resetField("remember");
         } else {
           toast.success(`${resData.success}`, {
-            description: `${resData.description}`,
+            description:
+              "Check Your Email For The OTP Code To Complete Login Process!",
           });
           showOTP(true);
         }
@@ -450,8 +486,18 @@ export default function LoginPage() {
                             {/* Helper Text */}
                             <p className="text-xs text-muted-foreground text-center max-w-xs">
                               Didn&apos;t receive the code?{" "}
-                              <button className="font-semibold text-primary hover:text-primary/80 transition-colors hover:cursor-pointer">
-                                Resend
+                              <button
+                                onClick={onResendClick}
+                                disabled={cooldownTime > 0}
+                                className={`font-semibold transition-colors ${
+                                  cooldownTime > 0
+                                    ? "text-muted-foreground cursor-not-allowed"
+                                    : "text-primary hover:text-primary/80 hover:cursor-pointer"
+                                }`}
+                              >
+                                {cooldownTime > 0
+                                  ? `Resend in ${cooldownTime}s`
+                                  : "Resend"}
                               </button>
                             </p>
                           </div>

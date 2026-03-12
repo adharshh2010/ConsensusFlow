@@ -11,7 +11,7 @@ export const send2FAOTP = async (email: string) => {
       where: eq(otptable.email, email),
     });
 
-    if (existingOTP && existingOTP.expiresAt > new Date()) {
+    if (existingOTP && new Date(existingOTP.expiresAt) > new Date()) {
       const otp = existingOTP.otp;
 
       const expiryMinutes = Math.ceil(
@@ -75,6 +75,10 @@ export const send2FAOTP = async (email: string) => {
 
       return { success: Promise };
     } else {
+      if (existingOTP && new Date(existingOTP.expiresAt) < new Date()) {
+        db.delete(otptable).where(eq(otptable.email, email));
+      }
+
       const otp = generate2FAOTP();
 
       await db.insert(otptable).values({
