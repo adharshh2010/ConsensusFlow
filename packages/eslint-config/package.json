@@ -13,7 +13,7 @@
     "@next/eslint-plugin-next": "^15.4.5",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
-    "eslint": "^9.32.0",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-react": "^7.37.5",
@@ -21,6 +21,6 @@
     "eslint-plugin-turbo": "^2.5.5",
     "globals": "^15.15.0",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.0"
+    "typescript-eslint": "^8.57.0"
   }
 }
