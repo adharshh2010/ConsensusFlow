@@ -21,7 +21,6 @@ export const verify2FAotp = async (otp: z.infer<typeof OTPSchema>) => {
     const remember = (await cookies()).get("remember")?.value === "true";
 
     (await cookies()).delete("remember");
-    (await cookies()).delete("email");
 
     const field = db.query.otptable.findFirst({
       where: eq(otptable.otp, DataValidation.data.otp),
