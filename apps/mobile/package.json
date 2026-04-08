@@ -15,7 +15,7 @@
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.9.0",
     "@react-navigation/elements": "^2.9.3",
-    "@react-navigation/native": "^7.1.26",
+    "@react-navigation/native": "^7.2.2",
     "expo": "~54.0.33",
     "expo-constants": "~55.0.7",
     "expo-font": "~14.0.10",
