@@ -30,7 +30,7 @@ export const verify2FAotp = async (otp: z.infer<typeof OTPSchema>) => {
 
     const user = await getUserByEmail(email!);
 
-    // Add session etc here
+    //TODO: Add session etc here
 
     await db.delete(otptable).where(eq(otptable.otp, DataValidation.data.otp));
 
